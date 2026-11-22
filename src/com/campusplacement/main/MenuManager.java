@@ -66,6 +66,6 @@ public class MenuManager {
         System.out.println("4. Back to Main Menu");
         System.out.println("=================================");
 
-        return InputHelper.getInt("Enter your choice: ");
+        return InputHelper.getInt("Select your choice: ");
     }
 }
