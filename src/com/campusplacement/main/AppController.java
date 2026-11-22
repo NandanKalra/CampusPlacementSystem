@@ -142,39 +142,39 @@ public void start() {
     }
 
 
-    private String selectBranch() {
+    
+private String selectBranch() {
 
-        while (true) {
+    while (true) {
 
-            menuManager.showBranchMenu();
+        int choice = menuManager.showBranchMenu();
 
-            int choice = InputHelper.getInt("Select branch: ");
+        switch (choice) {
 
-            switch (choice) {
+            case 1:
+                return "Computer Science";
 
-                case 1:
-                    return "Computer Science";
+            case 2:
+                return "BBA";
 
-                case 2:
-                    return "BBA";
+            case 3:
+                return "ECE";
 
-                case 3:
-                    return "ECE";
+            case 4:
+                return "Interior Designing";
 
-                case 4:
-                    return "Interior Designing";
+            case 5:
+                return "Pharma";
 
-                case 5:
-                    return "Pharma";
+            case 6:
+                return "Mechanical";
 
-                case 6:
-                    return "Mechanical";
-
-                default:
-                    System.out.println("Invalid branch. Select again.");
-            }
+            default:
+                System.out.println("Invalid branch. Select again.");
         }
     }
+}
+
 
 
     private void studentLogin() {
