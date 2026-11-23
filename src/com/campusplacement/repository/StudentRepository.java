@@ -3,6 +3,7 @@ package com.campusplacement.repository;
 
 import com.campusplacement.model.Student;
 import com.campusplacement.utility.FileManager;
+import com.campusplacement.utility.IdGenerator;
 
 import java.util.ArrayList;
 
@@ -52,8 +53,7 @@ public class StudentRepository {
     public boolean delete(int studentId) {
 
         boolean removed = students.removeIf(
-                student -> student.getUserId() == studentId
-        );
+                student -> student.getUserId() == studentId);
 
         if (removed) {
             rewriteFile();
@@ -69,11 +69,10 @@ public class StudentRepository {
     private void loadStudents() {
 
         ArrayList<String> records = fileManager.readFromFile(FILE_PATH);
+        int maxStudentId = 2000;
 
         for (String record : records) {
-
             try {
-
                 String[] data = record.split("\\|");
 
                 if (data.length != 7) {
@@ -87,15 +86,20 @@ public class StudentRepository {
                         data[3],
                         data[4],
                         Integer.parseInt(data[5]),
-                        Double.parseDouble(data[6])
-                );
+                        Double.parseDouble(data[6]));
 
                 students.add(student);
+
+                if (student.getUserId() > maxStudentId) {
+                    maxStudentId = student.getUserId();
+                }
 
             } catch (NumberFormatException e) {
                 System.out.println("Skipping invalid student record.");
             }
         }
+
+        IdGenerator.setNextStudentId(maxStudentId + 1);
     }
 
     private void rewriteFile() {
