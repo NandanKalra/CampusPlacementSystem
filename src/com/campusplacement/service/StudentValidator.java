@@ -1,4 +1,3 @@
-
 package com.campusplacement.service;
 
 import com.campusplacement.model.Student;
@@ -14,7 +13,7 @@ public class StudentValidator {
 
         String name = student.getName();
 
-        if (name == null || !name.matches("[a-zA-Z ]{2,30}")) {
+        if (name == null || !name.trim().matches("[a-zA-Z ]{2,30}")) {
             throw new ProjectException(
                 "Name must contain only letters and spaces (2-30 characters)."
             );
@@ -23,7 +22,7 @@ public class StudentValidator {
         String email = student.getEmail();
 
         if (email == null ||
-            !email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+            !email.trim().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
             throw new ProjectException("Please enter a valid email.");
         }
 
@@ -60,6 +59,8 @@ public class StudentValidator {
         if (branch == null) {
             return false;
         }
+
+        branch = branch.trim();
 
         String[] branches = {
             "Computer Science",
