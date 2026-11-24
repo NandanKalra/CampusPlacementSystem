@@ -1,4 +1,3 @@
-
 package com.campusplacement.service;
 
 import com.campusplacement.model.Student;
@@ -8,13 +7,17 @@ import java.util.ArrayList;
 
 public class StudentService {
 
-    private StudentRepository studentRepository;
-
+    private final StudentRepository studentRepository;
     public StudentService() {
         studentRepository = new StudentRepository();
     }
 
     public void addStudent(Student student) {
+        if (student == null) {
+            System.out.println("Invalid student data.");
+            return;
+        }
+
         studentRepository.save(student);
         System.out.println("Student saved successfully.");
     }
@@ -27,9 +30,14 @@ public class StudentService {
 
         int count = 0;
 
+        if (branch == null) {
+            return count;
+        }
+
         for (Student student : studentRepository.findAll()) {
 
-            if (student.getBranch().equalsIgnoreCase(branch)) {
+            if (student.getBranch() != null &&
+                student.getBranch().equalsIgnoreCase(branch)) {
                 count++;
             }
         }
