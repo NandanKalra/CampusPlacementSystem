@@ -1,4 +1,3 @@
-
 package com.campusplacement.service;
 
 import com.campusplacement.model.Student;
@@ -16,7 +15,19 @@ public class ProfileService {
 
     public void createProfile(Student student, StudentProfile profile) {
 
-        profiles.put(student.getUserId(), profile);
+        if (student == null || profile == null) {
+            System.out.println("Invalid profile details.");
+            return;
+        }
+
+        int studentId = student.getUserId();
+
+        if (profiles.containsKey(studentId)) {
+            System.out.println("Profile already exists.");
+            return;
+        }
+
+        profiles.put(studentId, profile);
         System.out.println("Profile created successfully.");
     }
 
@@ -25,6 +36,11 @@ public class ProfileService {
     }
 
     public void updateProfile(int studentId, StudentProfile updatedProfile) {
+
+        if (updatedProfile == null) {
+            System.out.println("Invalid profile details.");
+            return;
+        }
 
         if (profiles.containsKey(studentId)) {
             profiles.put(studentId, updatedProfile);
