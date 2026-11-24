@@ -48,6 +48,11 @@ public class Resume {
     public void setLastUpdated(String lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
+    public boolean isValid() {
+    return resumeTitle != null && !resumeTitle.trim().isEmpty()
+            && filePath != null && !filePath.trim().isEmpty()
+            && summary != null && !summary.trim().isEmpty();
+}
 
     public void displayResume() {
         System.out.println("\n===== RESUME DETAILS =====");
