@@ -1,4 +1,3 @@
-
 package com.campusplacement.service;
 
 import com.campusplacement.model.User;
@@ -14,8 +13,16 @@ public class RegistrationService {
 
     public boolean registerUser(User user) {
 
+        if (user == null || user.getEmail() == null) {
+            System.out.println("Invalid user details.");
+            return false;
+        }
+
         for (User existingUser : registeredUsers) {
-            if (existingUser.getEmail().equalsIgnoreCase(user.getEmail())) {
+
+            if (existingUser.getEmail() != null &&
+                existingUser.getEmail().equalsIgnoreCase(user.getEmail())) {
+
                 System.out.println("Email is already registered.");
                 return false;
             }
