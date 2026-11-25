@@ -3,6 +3,7 @@ package com.campusplacement.service;
 
 import com.campusplacement.model.User;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class AuthenticationService {
 
@@ -18,9 +19,16 @@ public class AuthenticationService {
 
     public User login(String email, String password) {
 
+        String normalizedEmail = email.trim().toLowerCase(Locale.ROOT);
+
         for (User user : users) {
-            if (user.getEmail().equalsIgnoreCase(email)
+
+            String existingEmail = user.getEmail()
+                    .trim().toLowerCase(Locale.ROOT);
+
+            if (existingEmail.equals(normalizedEmail)
                     && user.getPassword().equals(password)) {
+
                 System.out.println("Login successful!");
                 return user;
             }

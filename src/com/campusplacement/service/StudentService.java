@@ -14,9 +14,15 @@ public class StudentService {
         studentRepository = new StudentRepository();
     }
 
-    public void addStudent(Student student) {
-        studentRepository.save(student);
-        System.out.println("Student saved successfully.");
+    public boolean addStudent(Student student) {
+
+        boolean saved = studentRepository.save(student);
+
+        if (saved) {
+            System.out.println("Student saved successfully.");
+        }
+
+        return saved;
     }
 
     public Student findStudentById(int studentId) {
