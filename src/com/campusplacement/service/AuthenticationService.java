@@ -14,14 +14,29 @@ public class AuthenticationService {
     }
 
     public void addUser(User user) {
+
+        if (user == null) {
+            System.out.println("Invalid user.");
+            return;
+        }
+
         users.add(user);
     }
 
     public User login(String email, String password) {
 
+        if (email == null || password == null) {
+            System.out.println("Invalid email or password.");
+            return null;
+        }
+
         String normalizedEmail = email.trim().toLowerCase(Locale.ROOT);
 
         for (User user : users) {
+
+            if (user.getEmail() == null || user.getPassword() == null) {
+                continue;
+            }
 
             String existingEmail = user.getEmail()
                     .trim().toLowerCase(Locale.ROOT);

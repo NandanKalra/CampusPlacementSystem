@@ -1,4 +1,3 @@
-
 package com.campusplacement.service;
 
 import com.campusplacement.model.Student;
@@ -15,7 +14,8 @@ public class EligibilityService {
             return false;
         }
 
-        if (student.getCgpa() >= MINIMUM_CGPA
+        if (Double.isFinite(student.getCgpa())
+                && student.getCgpa() >= MINIMUM_CGPA
                 && student.getSemester() >= MINIMUM_SEMESTER) {
 
             System.out.println("Student is eligible for placements.");
