@@ -59,7 +59,7 @@ public class StudentRepository {
     public Student findById(int studentId) {
 
         for (Student student : students) {
-            if (student.getUserId() == studentId) {
+            if (student.getUserId().equalsignorecase studentId) {
                 return student;
             }
         }

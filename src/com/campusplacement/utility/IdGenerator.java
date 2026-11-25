@@ -6,7 +6,7 @@ public class IdGenerator {
     private static int userIdCounter = 1001;
     private static int studentIdCounter = 2001;
 
-    public static int generateUserId() {
+    public static  synchronized int generateUserId() {
         return userIdCounter++;
     }
 
