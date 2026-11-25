@@ -1,6 +1,6 @@
 
 package com.campusplacement.utility;
-
+import java.io.File;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -36,7 +36,10 @@ public class FileManager {
         System.out.println("Error saving data: " + e.getMessage());
     }
 }
-
+     public static boolean fileExists(String fileName) {
+    File file = new File(fileName);
+    return file.exists();
+}
     public ArrayList<String> readFromFile(String filePath) {
 
         ArrayList<String> records = new ArrayList<>();
