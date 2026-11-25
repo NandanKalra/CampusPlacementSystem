@@ -1,3 +1,4 @@
+
 package com.campusplacement.service;
 
 import com.campusplacement.model.Student;
@@ -8,18 +9,25 @@ import java.util.ArrayList;
 public class StudentService {
 
     private final StudentRepository studentRepository;
+
     public StudentService() {
         studentRepository = new StudentRepository();
     }
 
-    public void addStudent(Student student) {
+    public boolean addStudent(Student student) {
+
         if (student == null) {
             System.out.println("Invalid student data.");
-            return;
+            return false;
         }
 
-        studentRepository.save(student);
-        System.out.println("Student saved successfully.");
+        boolean saved = studentRepository.save(student);
+
+        if (saved) {
+            System.out.println("Student saved successfully.");
+        }
+
+        return saved;
     }
 
     public Student findStudentById(int studentId) {

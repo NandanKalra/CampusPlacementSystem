@@ -3,6 +3,7 @@ package com.campusplacement.repository;
 
 import com.campusplacement.model.Student;
 import com.campusplacement.utility.FileManager;
+import com.campusplacement.utility.IdGenerator;
 
 import java.util.ArrayList;
 
@@ -19,7 +20,26 @@ public class StudentRepository {
         loadStudents();
     }
 
-    public void save(Student student) {
+    public boolean save(Student student) {
+
+        if (student == null) {
+            System.out.println("Invalid student record.");
+            return false;
+        }
+
+        for (Student existingStudent : students) {
+
+            if (existingStudent.getUserId() == student.getUserId()) {
+                System.out.println("Student ID already exists.");
+                return false;
+            }
+
+            if (existingStudent.getEmail().trim()
+                    .equalsIgnoreCase(student.getEmail().trim())) {
+                System.out.println("Student email already exists.");
+                return false;
+            }
+        }
 
         students.add(student);
 
@@ -32,6 +52,8 @@ public class StudentRepository {
                 student.getCgpa();
 
         fileManager.writeToFile(FILE_PATH, record);
+
+        return true;
     }
 
     public Student findById(int studentId) {
@@ -52,8 +74,7 @@ public class StudentRepository {
     public boolean delete(int studentId) {
 
         boolean removed = students.removeIf(
-                student -> student.getUserId() == studentId
-        );
+                student -> student.getUserId() == studentId);
 
         if (removed) {
             rewriteFile();
@@ -69,11 +90,11 @@ public class StudentRepository {
     private void loadStudents() {
 
         ArrayList<String> records = fileManager.readFromFile(FILE_PATH);
+        int maxStudentId = 2000;
 
         for (String record : records) {
 
             try {
-
                 String[] data = record.split("\\|");
 
                 if (data.length != 7) {
@@ -87,15 +108,35 @@ public class StudentRepository {
                         data[3],
                         data[4],
                         Integer.parseInt(data[5]),
-                        Double.parseDouble(data[6])
-                );
+                        Double.parseDouble(data[6]));
 
-                students.add(student);
+                if (student.getUserId() > maxStudentId) {
+                    maxStudentId = student.getUserId();
+                }
+
+                boolean duplicate = false;
+
+                for (Student existingStudent : students) {
+
+                    if (existingStudent.getUserId() == student.getUserId()
+                            || existingStudent.getEmail().trim()
+                                    .equalsIgnoreCase(student.getEmail().trim())) {
+
+                        duplicate = true;
+                        break;
+                    }
+                }
+
+                if (!duplicate) {
+                    students.add(student);
+                }
 
             } catch (NumberFormatException e) {
                 System.out.println("Skipping invalid student record.");
             }
         }
+
+        IdGenerator.setNextStudentId(maxStudentId + 1);
     }
 
     private void rewriteFile() {

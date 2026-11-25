@@ -2,6 +2,7 @@ package com.campusplacement.service;
 
 import com.campusplacement.model.User;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class RegistrationService {
 
@@ -18,11 +19,18 @@ public class RegistrationService {
             return false;
         }
 
+        String email = user.getEmail().trim().toLowerCase(Locale.ROOT);
+
         for (User existingUser : registeredUsers) {
 
-            if (existingUser.getEmail() != null &&
-                existingUser.getEmail().equalsIgnoreCase(user.getEmail())) {
+            if (existingUser == null || existingUser.getEmail() == null) {
+                continue;
+            }
 
+            String existingEmail = existingUser.getEmail()
+                    .trim().toLowerCase(Locale.ROOT);
+
+            if (existingEmail.equals(email)) {
                 System.out.println("Email is already registered.");
                 return false;
             }

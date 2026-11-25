@@ -18,4 +18,7 @@ public class IdGenerator {
         System.out.println("Next User ID: " + userIdCounter);
         System.out.println("Next Student ID: " + studentIdCounter);
     }
+    public static void setNextStudentId(int nextId) {
+    studentIdCounter = nextId;
+}
 }
